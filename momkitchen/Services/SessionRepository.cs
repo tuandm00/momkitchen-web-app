@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using momkitchen.Mapper;
 using momkitchen.Models;
 
@@ -14,19 +15,20 @@ namespace momkitchen.Services
             _ctx = context;
         }
 
-        public async Task CreateSession(SessionDto session)
+        public async Task<Session> CreateSession(SessionDto session)
         {
-            var sessions = _ctx.Sessions.Select(s => new Session()
+            var sessions = new Session()
             {
                 CreateDate = DateTime.Now,
                 StartTime = DateTime.Now,
                 EndTime = DateTime.Now,
                 Status = session.Status,
-            });
+            };
 
-
-            await _ctx.Sessions.AnyAsync();
+            await _ctx.Sessions.AddAsync((Session)sessions);
             await _ctx.SaveChangesAsync();
+
+            return sessions;
 
         }
     }

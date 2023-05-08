@@ -113,5 +113,61 @@ namespace momkitchen.Services
                 await ctx.SaveChangesAsync();
             }
         }
+
+        public async Task RegisterChef(Account account)
+        {
+            var existedAccount = ctx.Accounts.Where(x => x.Email == account.Email).FirstOrDefault();
+            if (existedAccount != null) throw new Exception("Email is existed");
+
+            account.Password = HashPassword(account.Password);
+            account.RoleId = 3;
+            account.AccountStatus = "true";
+
+
+
+            ctx.Add(account);
+            if (await ctx.SaveChangesAsync() == 1)
+            {
+                var chef = new Chef
+                {
+                    Id = Guid.NewGuid().GetHashCode(),
+                    Email = account.Email,
+                    Name = account.Email,
+                };
+
+                ctx.Add(chef);
+                await ctx.SaveChangesAsync();
+            }
+
+
+        }
+        public async Task RegisterShipper(Account account)
+        {
+            var existedAccount = ctx.Accounts.Where(x => x.Email == account.Email).FirstOrDefault();
+            if (existedAccount != null) throw new Exception("Email is existed");
+
+            account.Password = HashPassword(account.Password);
+            account.RoleId = 4;
+            account.AccountStatus = "true";
+
+
+
+            ctx.Add(account);
+            if (await ctx.SaveChangesAsync() == 1)
+            {
+                var shipper = new Shipper
+                {
+                    Id = Guid.NewGuid().GetHashCode(),
+                    Email = account.Email,
+                    Name = account.Email,
+                };
+
+                ctx.Add(shipper);
+                await ctx.SaveChangesAsync();
+            }
+
+
+        }
+
     }
 }

@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MomkitchenContext>(option => option.UseSqlServer
 (builder.Configuration.GetConnectionString("MomkitchenAzure")));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
 {
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();

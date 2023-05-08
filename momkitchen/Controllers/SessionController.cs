@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using momkitchen.Mapper;
 using momkitchen.Models;
@@ -12,18 +13,26 @@ namespace momkitchen.Controllers
     {
         private readonly MomkitchenContext _ctx;
         private readonly ISessionRepository _repository;
+        private readonly IMapper _mapper;
 
-        public SessionController(MomkitchenContext context, ISessionRepository repository)
+        public SessionController(MomkitchenContext context,IMapper mapper , ISessionRepository repository)
         {
             _ctx = context;
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostSession(SessionDto session)
+        public async Task<Session> PostSession(SessionDto session)
         {
-            await _repository.CreateSession(session);
-            return Ok(session);
+            try
+            {
+                return await _repository.CreateSession(session);
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+
+            }
         }
     }
 }
