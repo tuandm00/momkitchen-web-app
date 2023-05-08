@@ -11,9 +11,9 @@ namespace momkitchen.Controllers
     public class SessionController : ControllerBase
     {
         private readonly MomkitchenContext _ctx;
-        private readonly ISessionRepositoryClass _repository;
+        private readonly ISessionRepository _repository;
 
-        public SessionController(MomkitchenContext context, ISessionRepositoryClass repository)
+        public SessionController(MomkitchenContext context, ISessionRepository repository)
         {
             _ctx = context;
             _repository = repository;

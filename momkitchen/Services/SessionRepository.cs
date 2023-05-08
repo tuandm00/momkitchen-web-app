@@ -4,12 +4,12 @@ using momkitchen.Models;
 
 namespace momkitchen.Services
 {
-    public class SessionRepositoryClass : ISessionRepositoryClass
+    public class SessionRepository : ISessionRepository
     {
         private readonly MomkitchenContext _ctx;
         
 
-        public SessionRepositoryClass(MomkitchenContext context)
+        public SessionRepository(MomkitchenContext context)
         {
             _ctx = context;
         }

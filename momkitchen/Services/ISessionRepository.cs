@@ -3,7 +3,7 @@ using momkitchen.Models;
 
 namespace momkitchen.Services
 {
-    public interface ISessionRepositoryClass
+    public interface ISessionRepository
     {
             Task CreateSession(SessionDto session);
     }
