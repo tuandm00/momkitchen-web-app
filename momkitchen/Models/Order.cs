@@ -13,8 +13,6 @@ public partial class Order
 
     public int? BatchId { get; set; }
 
-    public int? FoodPackageSessionId { get; set; }
-
     public bool? Status { get; set; }
 
     public bool? DeliveryStatus { get; set; }
@@ -23,13 +21,17 @@ public partial class Order
 
     public int? Quantity { get; set; }
 
+    public int? SessionId { get; set; }
+
     public virtual Batch? Batch { get; set; }
 
     public virtual Building? Building { get; set; }
 
     public virtual Customer? Customer { get; set; }
 
-    public virtual FoodPackageInSession? FoodPackageSession { get; set; }
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+
+    public virtual Session? Session { get; set; }
 }

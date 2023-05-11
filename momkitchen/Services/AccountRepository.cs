@@ -109,6 +109,7 @@ namespace momkitchen.Services
             {
                 accounts.Email = account.Email;
                 accounts.Password = HashPassword(account.Password);
+                accounts.RoleId = account.RoleId;
                 accounts.AccountStatus = "true";
                 await ctx.SaveChangesAsync();
             }

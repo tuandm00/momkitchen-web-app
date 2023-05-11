@@ -13,11 +13,13 @@ public partial class Session
 
     public DateTime? EndTime { get; set; }
 
-    public string? Status { get; set; }
+    public bool? Status { get; set; }
 
     public virtual ICollection<Batch> Batches { get; set; } = new List<Batch>();
 
     public virtual ICollection<FoodPackageInSession> FoodPackageInSessions { get; set; } = new List<FoodPackageInSession>();
 
-    public virtual SessionShipper IdNavigation { get; set; } = null!;
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual ICollection<SessionShipper> SessionShippers { get; set; } = new List<SessionShipper>();
 }

@@ -6,6 +6,14 @@ namespace momkitchen.Services
 {
     public interface ISessionRepository
     {
-            Task<Session> CreateSession(SessionDto session);
+            Task<SessionResponse> CreateSession(SessionDto session);
+
+            Task<Session> DeleteSession(int id);
+
+            Task UpdateStatusSession(int id, bool status);
+
+           List<Session> GetAllSession();
     }
+
+
 }

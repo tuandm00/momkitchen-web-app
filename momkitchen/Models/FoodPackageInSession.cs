@@ -25,7 +25,7 @@ public partial class FoodPackageInSession
 
     public virtual FoodPackage? FoodPackage { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual Session? Session { get; set; }
 }

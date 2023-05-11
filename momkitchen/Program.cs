@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using momkitchen.Models;
 using momkitchen.Services;
 using System.Text.Json.Serialization;
-using System.Text.Json;
 using momkitchen.Mapper;
+using momkitchen.Converters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +27,9 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
                         options.SerializerSettings.ReferenceLoopHandling =
                                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+builder.Services.AddControllers().AddJsonOptions(options => 
+    options.JsonSerializerOptions.Converters.Add(new DateConverters()));
 
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 

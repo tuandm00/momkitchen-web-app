@@ -26,6 +26,7 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsof
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Options.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Primitives.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Graph.Core.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Identity.Client.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Identity.Client.Extensions.Msal.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Abstractions.dll
@@ -34,6 +35,12 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsof
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Kiota.Abstractions.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Kiota.Authentication.Azure.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Kiota.Http.HttpClientLibrary.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Kiota.Serialization.Form.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Kiota.Serialization.Json.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Kiota.Serialization.Text.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
@@ -52,6 +59,7 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\System.S
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\System.Text.Encodings.Web.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\System.Text.Json.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\System.Windows.Extensions.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Tavis.UriTemplates.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll

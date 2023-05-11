@@ -87,3 +87,11 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Identity.Cl
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\System.Memory.Data.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Graph.Core.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Kiota.Abstractions.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Kiota.Authentication.Azure.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Kiota.Http.HttpClientLibrary.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Kiota.Serialization.Form.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Kiota.Serialization.Json.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Microsoft.Kiota.Serialization.Text.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\Tavis.UriTemplates.dll

@@ -87,3 +87,11 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Newtonsoft.Json.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Newtonsoft.Json.Bson.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\AutoMapper.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Graph.Core.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Abstractions.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Authentication.Azure.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Http.HttpClientLibrary.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Serialization.Form.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Serialization.Json.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Serialization.Text.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Tavis.UriTemplates.dll

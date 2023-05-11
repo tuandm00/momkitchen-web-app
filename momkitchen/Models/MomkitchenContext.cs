@@ -41,6 +41,8 @@ public partial class MomkitchenContext : DbContext
 
     public virtual DbSet<Order> Orders { get; set; }
 
+    public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+
     public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -250,9 +252,25 @@ public partial class MomkitchenContext : DbContext
                 .HasForeignKey(d => d.CustomerId)
                 .HasConstraintName("FK_Order_Customer");
 
-            entity.HasOne(d => d.FoodPackageSession).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.FoodPackageSessionId)
-                .HasConstraintName("FK_Order_FoodPackageInSession");
+            entity.HasOne(d => d.Session).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.SessionId)
+                .HasConstraintName("FK_Order_Session");
+        });
+
+        modelBuilder.Entity<OrderDetail>(entity =>
+        {
+            entity.ToTable("OrderDetail");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Status).HasMaxLength(50);
+
+            entity.HasOne(d => d.FoodPackageInSession).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.FoodPackageInSessionId)
+                .HasConstraintName("FK_OrderDetail_FoodPackageInSession");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("FK_OrderDetail_Order");
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -281,25 +299,21 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Session");
 
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.CreateDate).HasColumnType("date");
             entity.Property(e => e.EndTime).HasColumnType("datetime");
             entity.Property(e => e.StartTime).HasColumnType("datetime");
-            entity.Property(e => e.Status).HasMaxLength(50);
-
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Session)
-                .HasForeignKey<Session>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Session_SessionShipper");
         });
 
         modelBuilder.Entity<SessionShipper>(entity =>
         {
-            entity.HasKey(e => e.SessionId);
+            entity.HasKey(e => e.Id).HasName("PK_SessionShipper_1");
 
             entity.ToTable("SessionShipper");
 
-            entity.Property(e => e.SessionId).ValueGeneratedNever();
+            entity.HasOne(d => d.Session).WithMany(p => p.SessionShippers)
+                .HasForeignKey(d => d.SessionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SessionShipper_Session");
 
             entity.HasOne(d => d.Shipper).WithMany(p => p.SessionShippers)
                 .HasForeignKey(d => d.ShipperId)

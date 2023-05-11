@@ -23,7 +23,7 @@ namespace momkitchen.Controllers
         }
 
         [HttpPost]
-        public async Task<Session> PostSession(SessionDto session)
+        public async Task<SessionResponse> PostSession(SessionDto session)
         {
             try
             {
@@ -33,6 +33,29 @@ namespace momkitchen.Controllers
                 throw new Exception(ex.Message, ex);
 
             }
+            }
+
+        [HttpDelete("{id}")]
+        public async Task<Session> DeleteSession(int id)
+        {
+            try
+            {
+                return await _repository.DeleteSession(id);
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
+
+        [HttpPatch]
+        public async Task<IActionResult> PatchSession(int id, bool status)
+        {
+            await _repository.UpdateStatusSession(id, status);
+            return Ok();
+        }
+
+        [HttpGet]
+
+        public List<Session> GetAllSession() => _repository.GetAllSession();
     }
 }
