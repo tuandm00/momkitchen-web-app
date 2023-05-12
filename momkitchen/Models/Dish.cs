@@ -11,9 +11,9 @@ public partial class Dish
 
     public int? DishTypeId { get; set; }
 
-    public byte[]? Image { get; set; }
-
     public int? ChefId { get; set; }
+
+    public string? Image { get; set; }
 
     public virtual Chef? Chef { get; set; }
 

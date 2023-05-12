@@ -88,9 +88,7 @@ namespace momkitchen.Services
             {
                 var customer = new Customer
                 {
-                    Id = Guid.NewGuid().GetHashCode(),
                     Email = account.Email,
-                    Name = account.Email,
                 };
 
                 ctx.Add(customer);
@@ -131,9 +129,7 @@ namespace momkitchen.Services
             {
                 var chef = new Chef
                 {
-                    Id = Guid.NewGuid().GetHashCode(),
                     Email = account.Email,
-                    Name = account.Email,
                 };
 
                 ctx.Add(chef);
@@ -158,9 +154,7 @@ namespace momkitchen.Services
             {
                 var shipper = new Shipper
                 {
-                    Id = Guid.NewGuid().GetHashCode(),
                     Email = account.Email,
-                    Name = account.Email,
                 };
 
                 ctx.Add(shipper);

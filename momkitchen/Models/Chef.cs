@@ -21,9 +21,13 @@ public partial class Chef
 
     public virtual Building? Building { get; set; }
 
+    public virtual ICollection<DishType> DishTypes { get; set; } = new List<DishType>();
+
     public virtual ICollection<Dish> Dishes { get; set; } = new List<Dish>();
 
     public virtual Account? EmailNavigation { get; set; }
+
+    public virtual ICollection<FoodPackageStyle> FoodPackageStyles { get; set; } = new List<FoodPackageStyle>();
 
     public virtual ICollection<FoodPackage> FoodPackages { get; set; } = new List<FoodPackage>();
 }

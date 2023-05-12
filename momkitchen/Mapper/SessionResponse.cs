@@ -11,5 +11,7 @@
         public string? EndTime { get; set; }
 
         public bool? Status { get; set; }
+        public string? Title { get; set; }
+
     }
 }

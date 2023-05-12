@@ -15,6 +15,8 @@ public partial class Session
 
     public bool? Status { get; set; }
 
+    public string? Title { get; set; }
+
     public virtual ICollection<Batch> Batches { get; set; } = new List<Batch>();
 
     public virtual ICollection<FoodPackageInSession> FoodPackageInSessions { get; set; } = new List<FoodPackageInSession>();

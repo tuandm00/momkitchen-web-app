@@ -22,10 +22,12 @@ namespace momkitchen.Services
         {
             var newSession = new Session()
             {
+                Id = session.Id,
                 CreateDate = DateTime.Now,
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now,
-                Status = true,
+                StartTime = null,
+                EndTime = null,
+                Status = false,
+                Title = session.Title,
             };
 
             await _ctx.Sessions.AddAsync(newSession);
@@ -34,10 +36,43 @@ namespace momkitchen.Services
             var mapped = _mapper.Map<SessionResponse>(newSession);
 
             mapped.CreateDate = newSession.CreateDate.Value.ToString("dd/MM/yyyy");
-            mapped.StartTime = newSession.StartTime.Value.ToString("dd/MM/yyyy HH:mm");
-            mapped.EndTime = newSession.EndTime.Value.ToString("dd/MM/yyyy HH:mm");
+            
 
             return mapped;
+
+        }
+
+        public async Task<SessionResponse> EnableOrDisableTime(int id, SessionDto session)
+        {
+            var result = await _ctx.Sessions.FindAsync(id);
+            if (result != null && result.Status == false)
+            {
+                result.Id = id;
+                result.StartTime = DateTime.Now;
+                result.Status = true;
+                result.Title = session.Title;
+                await _ctx.SaveChangesAsync();
+
+
+            }
+            else if(result != null && result.Status == true)
+            {
+                result.Id = id;
+                result.EndTime = DateTime.Now;
+                result.Status = false;
+                result.Title = session.Title;
+                await _ctx.SaveChangesAsync();
+
+            }
+
+            var mapped = _mapper.Map<SessionResponse>(result);
+            mapped.StartTime = result.StartTime.Value.ToString("dd/MM/yyyy HH:mm");
+            mapped.EndTime = result.EndTime.Value.ToString("dd/MM/yyyy HH:mm");
+
+
+            return mapped;
+
+            
 
         }
 

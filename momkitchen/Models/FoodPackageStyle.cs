@@ -11,5 +11,9 @@ public partial class FoodPackageStyle
 
     public int? FoodPackageId { get; set; }
 
+    public int? ChefId { get; set; }
+
+    public virtual Chef? Chef { get; set; }
+
     public virtual FoodPackage? FoodPackage { get; set; }
 }

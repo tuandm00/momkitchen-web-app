@@ -11,5 +11,9 @@ public partial class DishType
 
     public string? Description { get; set; }
 
+    public int? ChefId { get; set; }
+
+    public virtual Chef? Chef { get; set; }
+
     public virtual ICollection<Dish> Dishes { get; set; } = new List<Dish>();
 }

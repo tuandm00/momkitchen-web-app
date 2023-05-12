@@ -12,7 +12,9 @@ namespace momkitchen.Services
 
             Task UpdateStatusSession(int id, bool status);
 
-           List<Session> GetAllSession();
+            List<Session> GetAllSession();
+
+            Task<SessionResponse> EnableOrDisableTime(int id, SessionDto session);
     }
 
 

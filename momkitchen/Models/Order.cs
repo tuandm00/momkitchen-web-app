@@ -9,7 +9,7 @@ public partial class Order
 
     public DateTime? Date { get; set; }
 
-    public long? CustomerId { get; set; }
+    public int? CustomerId { get; set; }
 
     public int? BatchId { get; set; }
 

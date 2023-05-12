@@ -15,9 +15,9 @@ public partial class Shipper
 
     public string? Address { get; set; }
 
-    public byte[]? Image { get; set; }
-
     public int? BatchId { get; set; }
+
+    public string? Image { get; set; }
 
     public virtual ICollection<Batch> Batches { get; set; } = new List<Batch>();
 

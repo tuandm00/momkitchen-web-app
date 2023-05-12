@@ -103,7 +103,6 @@ public partial class MomkitchenContext : DbContext
 
             entity.ToTable("Chef");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Address).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -122,7 +121,6 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Customer");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.DefaultBuilding).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -138,7 +136,6 @@ public partial class MomkitchenContext : DbContext
             entity.ToTable("Dish");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Image).HasColumnType("image");
             entity.Property(e => e.Name).HasMaxLength(50);
 
             entity.HasOne(d => d.Chef).WithMany(p => p.Dishes)
@@ -172,6 +169,10 @@ public partial class MomkitchenContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
+
+            entity.HasOne(d => d.Chef).WithMany(p => p.DishTypes)
+                .HasForeignKey(d => d.ChefId)
+                .HasConstraintName("FK_DishType_Chef");
         });
 
         modelBuilder.Entity<FoodPackage>(entity =>
@@ -209,6 +210,10 @@ public partial class MomkitchenContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Title).HasMaxLength(50);
+
+            entity.HasOne(d => d.Chef).WithMany(p => p.FoodPackageStyles)
+                .HasForeignKey(d => d.ChefId)
+                .HasConstraintName("FK_FoodPackageStyle_Chef");
 
             entity.HasOne(d => d.FoodPackage).WithMany(p => p.FoodPackageStyles)
                 .HasForeignKey(d => d.FoodPackageId)
@@ -299,9 +304,19 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Session");
 
-            entity.Property(e => e.CreateDate).HasColumnType("date");
-            entity.Property(e => e.EndTime).HasColumnType("datetime");
-            entity.Property(e => e.StartTime).HasColumnType("datetime");
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreateDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EndTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.StartTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Title)
+                .HasMaxLength(50)
+                .HasColumnName("title");
         });
 
         modelBuilder.Entity<SessionShipper>(entity =>
@@ -326,10 +341,8 @@ public partial class MomkitchenContext : DbContext
 
             entity.ToTable("Shipper");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Address).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.Image).HasColumnType("image");
             entity.Property(e => e.Name).HasMaxLength(50);
 
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.Shippers)

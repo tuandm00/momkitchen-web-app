@@ -57,5 +57,20 @@ namespace momkitchen.Controllers
         [HttpGet]
 
         public List<Session> GetAllSession() => _repository.GetAllSession();
+
+        [HttpPut]
+        [Route("enablestarttime")]
+        public async Task<SessionResponse> EnableStartTime(int id, SessionDto session)
+        {
+            try
+            {
+                 return await _repository.EnableOrDisableTime(id, session);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+
+            }
+        }
     }
 }
