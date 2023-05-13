@@ -77,8 +77,6 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Batch");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
             entity.HasOne(d => d.Session).WithMany(p => p.Batches)
                 .HasForeignKey(d => d.SessionId)
                 .HasConstraintName("FK_Batch_Session");
@@ -244,6 +242,8 @@ public partial class MomkitchenContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Date).HasColumnType("date");
+            entity.Property(e => e.DeliveryStatus).HasMaxLength(50);
+            entity.Property(e => e.Status).HasMaxLength(50);
 
             entity.HasOne(d => d.Batch).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.BatchId)
@@ -304,16 +304,11 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Session");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreateDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.EndTime)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.StartTime)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            entity.Property(e => e.EndTime).HasColumnType("datetime");
+            entity.Property(e => e.StartTime).HasColumnType("datetime");
             entity.Property(e => e.Title)
                 .HasMaxLength(50)
                 .HasColumnName("title");

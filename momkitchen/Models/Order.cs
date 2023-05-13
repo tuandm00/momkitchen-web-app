@@ -13,9 +13,9 @@ public partial class Order
 
     public int? BatchId { get; set; }
 
-    public bool? Status { get; set; }
+    public string? Status { get; set; }
 
-    public bool? DeliveryStatus { get; set; }
+    public string? DeliveryStatus { get; set; }
 
     public int? BuildingId { get; set; }
 
