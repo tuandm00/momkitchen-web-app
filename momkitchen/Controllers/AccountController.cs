@@ -96,7 +96,18 @@ namespace momkitchen.Controllers
             return Ok();
         }
 
-
+        [HttpPut]
+        [Route("updateaccountdetail")]
+        public async Task UpdateCustomerDetail(CustomerDto customerDto)
+        {
+            try
+            {
+                  await _repository.UpdateCustomerDetail(customerDto);
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
 
     }
 }

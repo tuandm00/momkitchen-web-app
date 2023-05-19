@@ -18,7 +18,12 @@ builder.Services.AddDbContext<MomkitchenContext>(option => option.UseSqlServer
 (builder.Configuration.GetConnectionString("MomkitchenAzure")));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+builder.Services.AddScoped<IFoodPackageInSessionRepository, FoodPackageInSessionRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IBatchRepository, BatchRepository>();
+
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
 {
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
@@ -40,13 +45,21 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "momkitchen v1"));
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "momkitchen v1"); c.RoutePrefix = String.Empty; });
 
 app.UseHttpsRedirection();
 app.UseCors("MyCors");
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();

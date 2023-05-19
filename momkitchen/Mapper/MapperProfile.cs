@@ -11,6 +11,7 @@ namespace momkitchen.Mapper
             CreateMap<RegisterDto, Account>().ReverseMap();
             CreateMap<SessionResponse, Session>().ReverseMap();
             CreateMap<SessionResponse, SessionDto>().ReverseMap();
+            CreateMap<Order, OrderResponse>().ReverseMap();
         }
     }
 }

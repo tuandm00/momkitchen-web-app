@@ -6,7 +6,7 @@ namespace momkitchen.Services
     public interface IAccountRepository
     {
         List<Account> GetAll(String email, int page = 1);
-        Task<Account> Login(LoginDto account);
+        AuthenticationResult Login(LoginDto account);
 
         Task UpdateAccountStatus(string email, bool status);
         string HashPassword(string password);
@@ -18,5 +18,7 @@ namespace momkitchen.Services
 
 
         Task UpdateAccount(string email, Account account);
+
+        Task UpdateCustomerDetail(CustomerDto customerDto);
     }
 }

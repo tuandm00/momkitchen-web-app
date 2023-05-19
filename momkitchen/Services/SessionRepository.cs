@@ -50,7 +50,6 @@ namespace momkitchen.Services
                 result.Id = id;
                 result.StartTime = DateTime.Now;
                 result.Status = true;
-                result.Title = session.Title;
                 await _ctx.SaveChangesAsync();
 
 
@@ -60,7 +59,6 @@ namespace momkitchen.Services
                 result.Id = id;
                 result.EndTime = DateTime.Now;
                 result.Status = false;
-                result.Title = session.Title;
                 await _ctx.SaveChangesAsync();
 
             }
@@ -113,6 +111,7 @@ namespace momkitchen.Services
                 StartTime = x.StartTime,
                 EndTime = x.EndTime,
                 Status = x.Status,
+                Title = x.Title,
             });
             return sessions.ToList();
         }

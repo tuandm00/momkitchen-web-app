@@ -133,7 +133,6 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Dish");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Name).HasMaxLength(50);
 
             entity.HasOne(d => d.Chef).WithMany(p => p.Dishes)
@@ -164,7 +163,6 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("DishType");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
 
@@ -177,7 +175,6 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("FoodPackage");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.DefaultPrice).HasColumnType("money");
             entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -191,7 +188,9 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("FoodPackageInSession");
 
-            entity.Property(e => e.CreateDate).HasColumnType("date");
+            entity.Property(e => e.CreateDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.FoodPackage).WithMany(p => p.FoodPackageInSessions)
                 .HasForeignKey(d => d.FoodPackageId)
@@ -206,7 +205,6 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("FoodPackageStyle");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Title).HasMaxLength(50);
 
             entity.HasOne(d => d.Chef).WithMany(p => p.FoodPackageStyles)
@@ -222,9 +220,7 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Notification");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Content)
                 .HasMaxLength(50)
                 .HasColumnName("content");
@@ -240,8 +236,9 @@ public partial class MomkitchenContext : DbContext
 
             entity.ToTable("Order");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Date).HasColumnType("date");
+            entity.Property(e => e.Date)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.DeliveryStatus).HasMaxLength(50);
             entity.Property(e => e.Status).HasMaxLength(50);
 
@@ -266,7 +263,6 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("OrderDetail");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Status).HasMaxLength(50);
 
             entity.HasOne(d => d.FoodPackageInSession).WithMany(p => p.OrderDetails)

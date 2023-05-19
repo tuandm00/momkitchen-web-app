@@ -1,4 +1,5 @@
-﻿using momkitchen.Mapper;
+﻿using AutoMapper;
+using momkitchen.Mapper;
 using momkitchen.Models;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,12 +9,14 @@ namespace momkitchen.Services
     public class AccountRepository : IAccountRepository
     {
         private readonly MomkitchenContext ctx;
+        private readonly IMapper _mapper;
 
         private static int PAGE_SIZE { get; set; } = 5;
 
-        public AccountRepository(MomkitchenContext context)
+        public AccountRepository(MomkitchenContext context, IMapper mapper)
         {
             ctx = context;
+            _mapper = mapper;
         }
 
         public List<Account> GetAll(String email, int page = 1)
@@ -36,7 +39,7 @@ namespace momkitchen.Services
             return result.ToList();
         }
 
-        public Task<Account> Login(LoginDto account)
+        public AuthenticationResult Login(LoginDto account)
         {
             var user = ctx.Accounts.Select(x => new Account()
             {
@@ -44,15 +47,27 @@ namespace momkitchen.Services
                 Password = x.Password,
                 AccountStatus = x.AccountStatus,
                 Role = x.Role
-            }).Where(x => x.Email == account.Email).FirstOrDefault();
-            bool isHashed = false;
+            }).FirstOrDefault(x => x.Email == account.Email);
+
             if (user != null)
             {
-                isHashed = HashPassword(account.Password) == user.Password;
+                bool isHashed = HashPassword(account.Password) == user.Password;
                 user.Password = null;
+
+                if (isHashed)
+                {
+                    return new AuthenticationResult
+                    {
+                        IsAuthenticated = true,
+                        User = user
+                    };
+                }
             }
-            
-            return isHashed ? Task.FromResult(user) : null;
+
+            return new AuthenticationResult
+            {
+                IsAuthenticated = false
+            };
         }
 
         public async Task UpdateAccountStatus(string email, bool status)
@@ -162,6 +177,23 @@ namespace momkitchen.Services
             }
 
 
+        }
+
+        public  Task UpdateCustomerDetail(CustomerDto customerDto)
+        {
+            var currentCustomer = ctx.Customers.Where(x => x.Email == customerDto.Email).FirstOrDefault();
+            if (currentCustomer != null)
+            {
+                currentCustomer.Id = customerDto.Id;
+                currentCustomer.Email = customerDto.Email;
+                currentCustomer.Name = customerDto.Name;
+                currentCustomer.Phone = customerDto.Phone;
+                currentCustomer.Image = customerDto.Image;
+                currentCustomer.DefaultBuilding = customerDto.DefaultBuilding;
+
+                ctx.SaveChangesAsync();
+            }
+            return null;
         }
 
     }

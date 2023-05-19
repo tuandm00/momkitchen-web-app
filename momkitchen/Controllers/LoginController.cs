@@ -21,11 +21,11 @@ namespace momkitchen.Controllers
         }
 
         [HttpPost]
-        public async Task<Account> Login(LoginDto account)
+        public AuthenticationResult Login(LoginDto account)
         {
             try
             {
-                return await _repository.Login(account);
+                return _repository.Login(account);
             }
             catch (Exception ex)
             {
