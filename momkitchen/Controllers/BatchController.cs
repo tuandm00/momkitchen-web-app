@@ -34,5 +34,23 @@ namespace momkitchen.Controllers
                 throw new Exception(ex.Message, ex);
             }
         }
+
+        [HttpPost]
+        [Route("assignbatchforshipper")]
+        public  void AssignBatchForShipper(int batchid, string emailshipper)
+        {
+            _repository.AssignBatchForShipper(batchid, emailshipper);
+        }
+
+        [HttpPost]
+        [Route("chooseshipperforbatch")]
+        public void ChooseShipperForBatch(int batchid, string emailshipper)
+        {
+            _repository.ChooseShipperForBatch(batchid, emailshipper);
+        }
+
+        [HttpGet]
+
+        public List<Shipper> GetAllShipper() => _repository.GetAllShipper();
     }
 }

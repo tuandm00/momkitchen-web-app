@@ -17,7 +17,7 @@ namespace momkitchen.Services
 
         public async Task ChangeStatus(int id, FoodPackageInSessionDto foodPackageInSessionDto)
         {
-            var result = await _ctx.FoodPackageInSessions.FindAsync(id);
+            var result = await _ctx.SessionPackages.FindAsync(id);
             if (result != null)
             {
                 result.Status = foodPackageInSessionDto.Status;

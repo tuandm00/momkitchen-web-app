@@ -12,13 +12,13 @@ namespace momkitchen.Services
         string HashPassword(string password);
         Task Register(Account account);
 
-        Task RegisterChef(Account account);
-
-        Task RegisterShipper(Account account);
+        Task RegisterChefAndShipper(Account account);
 
 
-        Task UpdateAccount(string email, Account account);
+        Task UpdateAccount(string email, AccountDto accountDto);
 
         Task UpdateCustomerDetail(CustomerDto customerDto);
+
+        List<CustomerDto> GetInfoCusByID(string email);
     }
 }

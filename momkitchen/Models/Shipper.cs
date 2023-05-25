@@ -9,9 +9,9 @@ public partial class Shipper
 
     public string? Name { get; set; }
 
-    public int? Phone { get; set; }
+    public int Phone { get; set; }
 
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
     public string? Address { get; set; }
 
@@ -21,7 +21,7 @@ public partial class Shipper
 
     public virtual ICollection<Batch> Batches { get; set; } = new List<Batch>();
 
-    public virtual Account? EmailNavigation { get; set; }
+    public virtual Account EmailNavigation { get; set; } = null!;
 
     public virtual ICollection<SessionShipper> SessionShippers { get; set; } = new List<SessionShipper>();
 }

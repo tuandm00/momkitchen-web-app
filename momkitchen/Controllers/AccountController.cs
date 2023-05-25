@@ -59,9 +59,9 @@ namespace momkitchen.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAccount([FromQuery] string email, Account account)
+        public async Task<IActionResult> UpdateAccount([FromQuery] string email, AccountDto accountDto)
         {
-            await _repository.UpdateAccount(email, account);
+            await _repository.UpdateAccount(email, accountDto);
             return Ok();
         }
         private bool UserAvailable(string email)
@@ -109,5 +109,8 @@ namespace momkitchen.Controllers
             }
         }
 
+        [HttpGet]
+        public List<CustomerDto> GetInfoCusByID(string email) => _repository.GetInfoCusByID(email);
+        
     }
 }

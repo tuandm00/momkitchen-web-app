@@ -9,15 +9,15 @@ public partial class Customer
 
     public string? Name { get; set; }
 
-    public string? Phone { get; set; }
+    public string Phone { get; set; } = null!;
 
     public string? Image { get; set; }
 
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
-    public string? DefaultBuilding { get; set; }
+    public int? DefaultBuilding { get; set; }
 
-    public virtual Account? EmailNavigation { get; set; }
+    public virtual Account EmailNavigation { get; set; } = null!;
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

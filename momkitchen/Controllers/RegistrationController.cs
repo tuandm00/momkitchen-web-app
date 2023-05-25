@@ -32,20 +32,13 @@ namespace momkitchen.Controllers
         }
 
         [HttpPost]
-        [Route("registerchef")]
-        public async Task<IActionResult> RegisChef(RegisterDto account)
+        [Route("registerchefandshipper")]
+        public async Task<IActionResult> RegisChefAndShipper(RegisterDto account)
         {
-            await _repository.RegisterChef(_mapper.Map<Account>(account));
+            await _repository.RegisterChefAndShipper(_mapper.Map<Account>(account));
             return Ok();
         }
 
-        [HttpPost]
-        [Route("registershipper")]
-        public async Task<IActionResult> RegisShipper(RegisterDto account)
-        {
-            await _repository.RegisterShipper(_mapper.Map<Account>(account));
-            return Ok();
-        }
     }
 }
 

@@ -33,8 +33,6 @@ public partial class MomkitchenContext : DbContext
 
     public virtual DbSet<FoodPackage> FoodPackages { get; set; }
 
-    public virtual DbSet<FoodPackageInSession> FoodPackageInSessions { get; set; }
-
     public virtual DbSet<FoodPackageStyle> FoodPackageStyles { get; set; }
 
     public virtual DbSet<Notification> Notifications { get; set; }
@@ -48,6 +46,8 @@ public partial class MomkitchenContext : DbContext
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Session> Sessions { get; set; }
+
+    public virtual DbSet<SessionPackage> SessionPackages { get; set; }
 
     public virtual DbSet<SessionShipper> SessionShippers { get; set; }
 
@@ -70,6 +70,7 @@ public partial class MomkitchenContext : DbContext
 
             entity.HasOne(d => d.Role).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Account_Role");
         });
 
@@ -119,13 +120,13 @@ public partial class MomkitchenContext : DbContext
         {
             entity.ToTable("Customer");
 
-            entity.Property(e => e.DefaultBuilding).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.Phone).HasMaxLength(50);
 
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.Customers)
                 .HasForeignKey(d => d.Email)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Customer_Account");
         });
 
@@ -146,16 +147,18 @@ public partial class MomkitchenContext : DbContext
 
         modelBuilder.Entity<DishFoodPackage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Dish_Foo__3214EC075FC133A6");
+            entity.HasKey(e => new { e.DishId, e.FoodPackageId });
 
             entity.ToTable("Dish_FoodPackage");
 
             entity.HasOne(d => d.Dish).WithMany(p => p.DishFoodPackages)
                 .HasForeignKey(d => d.DishId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Dish_FoodPackage_Dish");
 
             entity.HasOne(d => d.FoodPackage).WithMany(p => p.DishFoodPackages)
                 .HasForeignKey(d => d.FoodPackageId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Dish_FoodPackage_FoodPackage");
         });
 
@@ -182,23 +185,10 @@ public partial class MomkitchenContext : DbContext
             entity.HasOne(d => d.Chef).WithMany(p => p.FoodPackages)
                 .HasForeignKey(d => d.ChefId)
                 .HasConstraintName("FK_FoodPackage_Chef");
-        });
 
-        modelBuilder.Entity<FoodPackageInSession>(entity =>
-        {
-            entity.ToTable("FoodPackageInSession");
-
-            entity.Property(e => e.CreateDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.FoodPackage).WithMany(p => p.FoodPackageInSessions)
-                .HasForeignKey(d => d.FoodPackageId)
-                .HasConstraintName("FK_FoodPackageInSession_FoodPackage");
-
-            entity.HasOne(d => d.Session).WithMany(p => p.FoodPackageInSessions)
-                .HasForeignKey(d => d.SessionId)
-                .HasConstraintName("FK_FoodPackageInSession_Session");
+            entity.HasOne(d => d.FoodPackageStyle).WithMany(p => p.FoodPackages)
+                .HasForeignKey(d => d.FoodPackageStyleId)
+                .HasConstraintName("FK_FoodPackage_FoodPackageStyle");
         });
 
         modelBuilder.Entity<FoodPackageStyle>(entity =>
@@ -210,10 +200,6 @@ public partial class MomkitchenContext : DbContext
             entity.HasOne(d => d.Chef).WithMany(p => p.FoodPackageStyles)
                 .HasForeignKey(d => d.ChefId)
                 .HasConstraintName("FK_FoodPackageStyle_Chef");
-
-            entity.HasOne(d => d.FoodPackage).WithMany(p => p.FoodPackageStyles)
-                .HasForeignKey(d => d.FoodPackageId)
-                .HasConstraintName("FK_FoodPackageStyle_FoodPackage");
         });
 
         modelBuilder.Entity<Notification>(entity =>
@@ -236,10 +222,15 @@ public partial class MomkitchenContext : DbContext
 
             entity.ToTable("Order");
 
+            entity.Property(e => e.CustomerPhone).HasMaxLength(50);
             entity.Property(e => e.Date)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.DeliveryStatus).HasMaxLength(50);
+            entity.Property(e => e.DeliveryTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.Status).HasMaxLength(50);
 
             entity.HasOne(d => d.Batch).WithMany(p => p.Orders)
@@ -261,30 +252,34 @@ public partial class MomkitchenContext : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
+            entity.HasKey(e => new { e.SessionPackageId, e.OrderId });
+
             entity.ToTable("OrderDetail");
 
             entity.Property(e => e.Status).HasMaxLength(50);
 
-            entity.HasOne(d => d.FoodPackageInSession).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.FoodPackageInSessionId)
-                .HasConstraintName("FK_OrderDetail_FoodPackageInSession");
-
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK_OrderDetail_Order");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrderDetail_Order1");
+
+            entity.HasOne(d => d.SessionPackage).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.SessionPackageId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrderDetail_SessionPackage");
         });
 
         modelBuilder.Entity<Payment>(entity =>
         {
             entity.ToTable("Payment");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Amount).HasColumnType("money");
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Type).HasMaxLength(50);
 
             entity.HasOne(d => d.Order).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Payment_Order");
         });
 
@@ -308,6 +303,25 @@ public partial class MomkitchenContext : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(50)
                 .HasColumnName("title");
+        });
+
+        modelBuilder.Entity<SessionPackage>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_FoodPackageInSession");
+
+            entity.ToTable("SessionPackage");
+
+            entity.Property(e => e.CreateDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.FoodPackage).WithMany(p => p.SessionPackages)
+                .HasForeignKey(d => d.FoodPackageId)
+                .HasConstraintName("FK_FoodPackageInSession_FoodPackage");
+
+            entity.HasOne(d => d.Session).WithMany(p => p.SessionPackages)
+                .HasForeignKey(d => d.SessionId)
+                .HasConstraintName("FK_FoodPackageInSession_Session");
         });
 
         modelBuilder.Entity<SessionShipper>(entity =>
@@ -338,6 +352,7 @@ public partial class MomkitchenContext : DbContext
 
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.Shippers)
                 .HasForeignKey(d => d.Email)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Shipper_Account");
         });
 

@@ -5,19 +5,17 @@ namespace momkitchen.Models;
 
 public partial class OrderDetail
 {
-    public int Id { get; set; }
+    public int SessionPackageId { get; set; }
 
-    public int? FoodPackageInSessionId { get; set; }
+    public double Price { get; set; }
 
-    public double? Price { get; set; }
+    public int Quantity { get; set; }
 
-    public int? Quantity { get; set; }
+    public string Status { get; set; } = null!;
 
-    public string? Status { get; set; }
+    public int OrderId { get; set; }
 
-    public int? OrderId { get; set; }
+    public virtual Order Order { get; set; } = null!;
 
-    public virtual FoodPackageInSession? FoodPackageInSession { get; set; }
-
-    public virtual Order? Order { get; set; }
+    public virtual SessionPackage SessionPackage { get; set; } = null!;
 }

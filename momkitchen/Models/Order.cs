@@ -23,6 +23,14 @@ public partial class Order
 
     public int? SessionId { get; set; }
 
+    public string? Email { get; set; }
+
+    public string? CustomerPhone { get; set; }
+
+    public DateTime? DeliveryTime { get; set; }
+
+    public string? Note { get; set; }
+
     public virtual Batch? Batch { get; set; }
 
     public virtual Building? Building { get; set; }

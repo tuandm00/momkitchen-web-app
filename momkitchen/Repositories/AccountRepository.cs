@@ -115,67 +115,58 @@ namespace momkitchen.Services
 
         }
 
-        public async Task UpdateAccount(string email,Account account)
+        public async Task UpdateAccount(string email,AccountDto accountDto)
         {
             var accounts = await ctx.Accounts.FindAsync(email);
-            if(account != null)
+            if(accountDto != null)
             {
-                accounts.Email = account.Email;
-                accounts.Password = HashPassword(account.Password);
-                accounts.RoleId = account.RoleId;
+                accounts.Password = HashPassword(accountDto.Password);
+                accounts.RoleId = accountDto.RoleId;
                 accounts.AccountStatus = "true";
                 await ctx.SaveChangesAsync();
             }
         }
 
-        public async Task RegisterChef(Account account)
+        public async Task RegisterChefAndShipper(Account account)
         {
             var existedAccount = ctx.Accounts.Where(x => x.Email == account.Email).FirstOrDefault();
             if (existedAccount != null) throw new Exception("Email is existed");
 
             account.Password = HashPassword(account.Password);
-            account.RoleId = 3;
+            account.RoleId = account.RoleId;
             account.AccountStatus = "true";
 
 
 
             ctx.Add(account);
-            if (await ctx.SaveChangesAsync() == 1)
+            if(account.RoleId == 3)
             {
-                var chef = new Chef
+                if (await ctx.SaveChangesAsync() == 1)
                 {
-                    Email = account.Email,
-                };
+                    var chef = new Chef
+                    {
+                        Email = account.Email,
+                    };
 
-                ctx.Add(chef);
-                await ctx.SaveChangesAsync();
+                    ctx.Add(chef);
+                    await ctx.SaveChangesAsync();
+                }
             }
-
-
-        }
-        public async Task RegisterShipper(Account account)
-        {
-            var existedAccount = ctx.Accounts.Where(x => x.Email == account.Email).FirstOrDefault();
-            if (existedAccount != null) throw new Exception("Email is existed");
-
-            account.Password = HashPassword(account.Password);
-            account.RoleId = 4;
-            account.AccountStatus = "true";
-
-
-
-            ctx.Add(account);
-            if (await ctx.SaveChangesAsync() == 1)
+            
+            if(account.RoleId == 4)
             {
-                var shipper = new Shipper
+                if (await ctx.SaveChangesAsync() == 1)
                 {
-                    Email = account.Email,
-                };
+                    var shipper = new Shipper
+                    {
+                        Email = account.Email,
+                    };
 
-                ctx.Add(shipper);
-                await ctx.SaveChangesAsync();
+                    ctx.Add(shipper);
+                    await ctx.SaveChangesAsync();
+                }
             }
-
+        
 
         }
 
@@ -196,5 +187,28 @@ namespace momkitchen.Services
             return null;
         }
 
+        public List<CustomerDto> GetInfoCusByID(string email)
+        {
+            var accounts = ctx.Customers.AsQueryable();
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                accounts = accounts.Where(x => x.Email.Contains(email));
+            }
+            var result = accounts.Select(x => new CustomerDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Phone = x.Phone,
+                Image = x.Image,
+                Email = email,
+                DefaultBuilding = x.DefaultBuilding,
+
+            });
+
+            return result.ToList();
+        }
+
+        
     }
 }

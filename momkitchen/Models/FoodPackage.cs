@@ -17,11 +17,13 @@ public partial class FoodPackage
 
     public string? Description { get; set; }
 
+    public int? FoodPackageStyleId { get; set; }
+
     public virtual Chef? Chef { get; set; }
 
     public virtual ICollection<DishFoodPackage> DishFoodPackages { get; set; } = new List<DishFoodPackage>();
 
-    public virtual ICollection<FoodPackageInSession> FoodPackageInSessions { get; set; } = new List<FoodPackageInSession>();
+    public virtual FoodPackageStyle? FoodPackageStyle { get; set; }
 
-    public virtual ICollection<FoodPackageStyle> FoodPackageStyles { get; set; } = new List<FoodPackageStyle>();
+    public virtual ICollection<SessionPackage> SessionPackages { get; set; } = new List<SessionPackage>();
 }

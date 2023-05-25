@@ -12,6 +12,6 @@
 
         public string? Email { get; set; }
 
-        public string? DefaultBuilding { get; set; }
+        public int? DefaultBuilding { get; set; }
     }
 }

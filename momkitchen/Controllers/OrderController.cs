@@ -11,27 +11,43 @@ namespace momkitchen.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly MomkitchenContext _ctx;
-        private readonly IOrderRepository _repository;
-        private readonly IMapper _mapper;
 
-        public OrderController(MomkitchenContext context, IOrderRepository orderRepository, IMapper mapper)
+        private readonly IOrderRepository _repository;
+
+        private readonly IOrderService _service;
+
+        public OrderController(IOrderRepository orderRepository, IOrderService orderService)
         {
-            _ctx = context;
             _repository = orderRepository;
-            _mapper = mapper;
+            _service = orderService;
         }
 
         [HttpPost]
-        public async Task<OrderResponse> CreateOrder(OrderDto orderDto)
+        public async Task CreateOrder(OrderDto orderDto)
         {
             try
             {
-               return await _repository.CreateOrder(orderDto);
-            }catch (Exception ex)
-            {
-                throw new Exception(ex.Message,ex);
+
+                await _repository.CreateOrder(orderDto);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("getorder")]
+        public async Task<Order> GetOrderByID(int id)
+        {
+            return await _service.GetOrderByID(id);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetOrderbyid (int id)
+        {
+            return Ok(_repository.Test(id));
         }
     }
 }

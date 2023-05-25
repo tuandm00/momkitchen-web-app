@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using momkitchen.Mapper;
 using momkitchen.Models;
+using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace momkitchen.Services
 {
@@ -17,13 +19,42 @@ namespace momkitchen.Services
             _ctx = context;
             _mapper = mapper;
         }
+        public static DateTime TranferDateTimeByTimeZone(DateTime dateTime, string timezoneArea)
+        {
 
+            ReadOnlyCollection<TimeZoneInfo> collection = TimeZoneInfo.GetSystemTimeZones();
+            var timeZone = collection.ToList().Where(x => x.DisplayName.ToLower().Contains(timezoneArea)).First();
+
+            var timeZoneLocal = TimeZoneInfo.Local;
+
+            var utcDateTime = TimeZoneInfo.ConvertTime(dateTime, timeZoneLocal, timeZone);
+
+            return utcDateTime;
+        }
+
+        public static DateTime GetDateTimeTimeZoneVietNam()
+        {
+
+            return TranferDateTimeByTimeZone(DateTime.Now, "hanoi");
+        }
+        public static DateTime? StringToDateTimeVN(string dateStr)
+        {
+
+            var isValid = DateTime.TryParseExact(
+                                dateStr,
+                                "d'/'M'/'yyyy",
+                                CultureInfo.InvariantCulture,
+                                DateTimeStyles.None,
+                                out var date
+                            );
+            return isValid ? date : null;
+        }
         public async Task<SessionResponse> CreateSession(SessionDto session)
         {
             var newSession = new Session()
             {
                 Id = session.Id,
-                CreateDate = DateTime.Now,
+                CreateDate = GetDateTimeTimeZoneVietNam(),
                 StartTime = null,
                 EndTime = null,
                 Status = false,
@@ -35,8 +66,8 @@ namespace momkitchen.Services
 
             var mapped = _mapper.Map<SessionResponse>(newSession);
 
-            mapped.CreateDate = newSession.CreateDate.Value.ToString("dd/MM/yyyy");
-            
+            mapped.CreateDate = newSession.CreateDate.Value.ToString("dd/MM/yyyy HH:mm");
+
 
             return mapped;
 
@@ -48,29 +79,30 @@ namespace momkitchen.Services
             if (result != null && result.Status == false)
             {
                 result.Id = id;
-                result.StartTime = DateTime.Now;
+                result.StartTime = GetDateTimeTimeZoneVietNam();
                 result.Status = true;
                 await _ctx.SaveChangesAsync();
-
+                var mapped = _mapper.Map<SessionResponse>(result);
+                mapped.StartTime = result.StartTime.Value.ToString("dd/MM/yyyy HH:mm");
+                return mapped;
 
             }
-            else if(result != null && result.Status == true)
+            else if (result != null && result.Status == true)
             {
                 result.Id = id;
-                result.EndTime = DateTime.Now;
+                result.EndTime = GetDateTimeTimeZoneVietNam();
                 result.Status = false;
                 await _ctx.SaveChangesAsync();
+                var mapped = _mapper.Map<SessionResponse>(result);
+                mapped.EndTime = result.EndTime.Value.ToString("dd/MM/yyyy HH:mm");
+                return mapped;
+
 
             }
 
-            var mapped = _mapper.Map<SessionResponse>(result);
-            mapped.StartTime = result.StartTime.Value.ToString("dd/MM/yyyy HH:mm");
-            mapped.EndTime = result.EndTime.Value.ToString("dd/MM/yyyy HH:mm");
+            return null;
 
 
-            return mapped;
-
-            
 
         }
 
@@ -92,10 +124,10 @@ namespace momkitchen.Services
             return findId;
         }
 
-        public async Task UpdateStatusSession(int id, bool  status)
+        public async Task UpdateStatusSession(int id, bool status)
         {
             var result = await _ctx.Sessions.FindAsync(id);
-            if(result != null)
+            if (result != null)
             {
                 result.Status = status;
                 await _ctx.SaveChangesAsync();
@@ -105,7 +137,8 @@ namespace momkitchen.Services
 
         public List<Session> GetAllSession()
         {
-            var sessions = _ctx.Sessions.Select(x => new Session() { 
+            var sessions = _ctx.Sessions.Select(x => new Session()
+            {
                 Id = x.Id,
                 CreateDate = x.CreateDate,
                 StartTime = x.StartTime,

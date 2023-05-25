@@ -19,9 +19,9 @@ public partial class Session
 
     public virtual ICollection<Batch> Batches { get; set; } = new List<Batch>();
 
-    public virtual ICollection<FoodPackageInSession> FoodPackageInSessions { get; set; } = new List<FoodPackageInSession>();
-
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual ICollection<SessionPackage> SessionPackages { get; set; } = new List<SessionPackage>();
 
     public virtual ICollection<SessionShipper> SessionShippers { get; set; } = new List<SessionShipper>();
 }

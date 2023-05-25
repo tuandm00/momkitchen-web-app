@@ -21,6 +21,8 @@ builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<IFoodPackageInSessionRepository, FoodPackageInSessionRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IBatchRepository, BatchRepository>();
+builder.Services.AddScoped<IFoodPackageRepository, FoodPackageRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddHttpContextAccessor();
 
