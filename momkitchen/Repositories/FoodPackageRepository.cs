@@ -73,7 +73,7 @@ namespace momkitchen.Services
                 DefaultPrice = x.DefaultPrice,
                 ChefId = x.ChefId,
                 Description = x.Description,
-                FoodPackageStyleId = x.FoodPackageStyleId,
+                FoodPackageStyle = x.FoodPackageStyle,
             });
 
             return findpackageid.ToList();
@@ -94,3 +94,4 @@ namespace momkitchen.Services
         }
     }
 }
+    
