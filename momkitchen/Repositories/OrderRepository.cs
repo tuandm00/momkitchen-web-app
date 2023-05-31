@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using momkitchen.Constrants;
 using momkitchen.Mapper;
 using momkitchen.Models;
 using System.Collections.ObjectModel;
@@ -59,7 +60,7 @@ namespace momkitchen.Services
             {
                 batch = 1;
             };
-            if (buildingid > 3  && buildingid <= 6)
+            if (buildingid > 3 && buildingid <= 6)
             {
                 batch = 2;
             }
@@ -71,7 +72,7 @@ namespace momkitchen.Services
             {
                 batch = 4;
             }
-            if(buildingid > 12 && buildingid <= 15)
+            if (buildingid > 12 && buildingid <= 15)
             {
                 batch = 5;
             }
@@ -82,7 +83,7 @@ namespace momkitchen.Services
         {
             return _ctx.OrderDetails.Where(x => x.OrderId == id).Include(x => x.Order).ThenInclude(x => x.Payments).Select(x => new OrderDetail()).FirstOrDefault();
         }
-        
+
         public async Task CreateOrder(OrderDto orderDto)
         {
             using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction? transaction = _ctx.Database.BeginTransaction();
@@ -91,42 +92,74 @@ namespace momkitchen.Services
             var customerphone = _ctx.Customers.Where(x => x.Email == orderDto.Email).AsNoTracking().Select(x => x.Phone).FirstOrDefault();
             var email = orderDto.Email;
             var batchid = GetBatchIdByBuildingId(email);
-            
             var now = GetDateTimeTimeZoneVietNam();
 
             var newOrder = new Order()
             {
+                Email = email,
                 Date = now,
                 DeliveryTime = now.AddMinutes(15),
                 CustomerId = customerid,
                 BuildingId = buildingid,
                 CustomerPhone = customerphone,
-                Status = "New",
-                DeliveryStatus = "New",
+                Status = OrderConstrants.NEWSTATUS,
+                DeliveryStatus = OrderConstrants.NEWDELIVERYSTATUS,
+                Quantity = orderDto.Quantity,
+                TotalPrice = orderDto.TotalPrice,
                 BatchId = batchid,
                 SessionId = orderDto.SessionId,
-                Quantity = orderDto.Quantity,
                 Note = orderDto.Note,
             };
 
-            var currentorderid = newOrder.Id;
-
-            var createdOrder = await _ctx.Orders.AddAsync(newOrder);
-
-            var newPayment = new Payment()
+            foreach (var paymentDto in orderDto.Payments)
             {
-                Type = "Prepayment",
-                OrderId = currentorderid,
-                Status = "Complete",
+                var payment = new Payment()
+                {
+                    Order = newOrder,
+                    Type = PaymentConstrants.TYPE,
+                    Status = PaymentConstrants.PAID,
+                    Amount = paymentDto.Amount,
+                };
+                await _ctx.Payments.AddAsync(payment);
+            }
 
-            };
+            var quantity = 0;
+            var total = 0;
+            foreach (var orderDetailDto in orderDto.OrderDetails)
+            {
+                quantity += orderDetailDto.Quantity;
+                total += (int)orderDetailDto.Price;
+                var orderDetail = new OrderDetail()
+                {
+                    Order = newOrder,
+                    SessionPackageId = orderDetailDto.SessionPackageId,
+                    Price = orderDetailDto.Price,
+                    Quantity = orderDetailDto.Quantity,
+                    Status = OrderdetailConstrants.ACTIVE,
+                };
+
+                await _ctx.OrderDetails.AddAsync(orderDetail);
+
+                // Minus Remainquantity
+                var sessionPackageIds = orderDto.OrderDetails.Select(od => od.SessionPackageId).ToList();
+                var sessionPackages = await _ctx.SessionPackages.Where(sp => sessionPackageIds.Contains(sp.Id)).ToListAsync();
+                foreach (var sessionPackage in sessionPackages)
+                {
+                    var orderDetailQuantity = orderDto.OrderDetails.FirstOrDefault(od => od.SessionPackageId == sessionPackage.Id)?.Quantity ?? 0;
+                    sessionPackage.RemainQuantity -= orderDetailQuantity;
+                    _ctx.SessionPackages.Update(sessionPackage);
+                }
+
+               
+            }
+            newOrder.Quantity = quantity;
+            newOrder.TotalPrice = total;
+            var createdOrder = await _ctx.Orders.AddAsync(newOrder);
             await _ctx.SaveChangesAsync();
             transaction.Commit();
-
-
         }
 
-        
+
 
         public async Task<Order> GetOrderByID(int id)
         {
@@ -172,6 +205,46 @@ namespace momkitchen.Services
                     Title = x.Session.Title,
                 }
             }).FirstOrDefault();
+        }
+
+        public List<Order> GetOrderDetailByOrderId()
+        {
+            var result = _ctx.Orders.Select(x => new Order
+            {
+                Id=x.Id,
+                Date=x.Date,
+                Customer = x.Customer,
+                Batch = x.Batch,
+                Status = x.Status,
+                DeliveryStatus=x.DeliveryStatus,
+                Building = x.Building,
+                Session = x.Session,
+                Email = x.Email,
+                CustomerPhone=x.CustomerPhone,
+                DeliveryTime=x.DeliveryTime,
+                Note=x.Note,
+            }).ToList();
+
+            return result;
+        }
+
+        public Payment GetPaymentByOrderId(int orderid)
+        {
+            var result = _ctx.Payments.Where(x => x.OrderId == orderid).Select(x => new Payment
+            {
+                Type=x.Type,
+                OrderId=x.OrderId,
+                Status=x.Status,
+                Amount=x.Amount,
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+        public List<Order> GetAllOrder()
+        {
+            var result = _ctx.Orders.ToList();
+            return result;
         }
     }
 }

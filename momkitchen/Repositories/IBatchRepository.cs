@@ -10,5 +10,8 @@ namespace momkitchen.Services
         List<Shipper> GetAllShipper();
         void AssignBatchForShipper(int batchid, string emailshipper);
         void ChooseShipperForBatch(int batchid, string emailshipper);
+        List<Batch> GetAllBatch();
+        Task<Batch> DeleteBatchById(int id);
+
     }
 }

@@ -39,6 +39,15 @@ namespace momkitchen.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("registershipperbybcryt")]
+
+        public async Task<IActionResult> RegisterShipperByBcryt(RegisterDto account)
+        {
+            await _repository.RegisterShipperByBcryt(_mapper.Map<Account>(account));
+            return Ok();
+        }
+
     }
 }
 

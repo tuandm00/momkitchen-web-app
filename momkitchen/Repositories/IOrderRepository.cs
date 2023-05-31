@@ -9,8 +9,12 @@ namespace momkitchen.Services
 
         Task<Order> GetOrderByID(int id);
 
-       // Task<Order> GetOrderDetailByOrderId(int id);
+        List<Order> GetOrderDetailByOrderId();
 
         Order Test(int id);
+
+        Payment GetPaymentByOrderId(int orderid);
+
+        List<Order> GetAllOrder();
     }
 }

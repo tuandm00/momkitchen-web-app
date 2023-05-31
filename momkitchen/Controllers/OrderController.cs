@@ -13,7 +13,6 @@ namespace momkitchen.Controllers
     {
 
         private readonly IOrderRepository _repository;
-
         private readonly IOrderService _service;
 
         public OrderController(IOrderRepository orderRepository, IOrderService orderService)
@@ -27,7 +26,6 @@ namespace momkitchen.Controllers
         {
             try
             {
-
                 await _repository.CreateOrder(orderDto);
             }
             catch (Exception ex)
@@ -49,5 +47,20 @@ namespace momkitchen.Controllers
         {
             return Ok(_repository.Test(id));
         }
+
+        [HttpGet]
+        [Route("getallorderdetail")]
+
+        public List<Order> GetOrderDetailByOrderId() => _repository.GetOrderDetailByOrderId();
+
+        [HttpGet]
+        [Route("getpaymentbyorderid")]
+
+        public Payment GetPaymentByOrderId(int orderid) => _repository.GetPaymentByOrderId(orderid);
+
+        [HttpGet]
+        [Route("getallorder")]
+
+        public List<Order> GetAllOrder() => _repository.GetAllOrder();
     }
 }

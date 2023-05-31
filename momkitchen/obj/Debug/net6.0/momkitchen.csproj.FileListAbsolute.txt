@@ -95,3 +95,4 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Debug\net6.0\ref\momkitchen.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Debug\net6.0\momkitchen.pdb
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Debug\net6.0\momkitchen.genruntimeconfig.cache
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Debug\net6.0\momkitchen.csproj.AssemblyReference.cache
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Debug\net6.0\BCrypt.Net-Next.dll

@@ -95,3 +95,4 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Ser
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Serialization.Json.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Microsoft.Kiota.Serialization.Text.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\Tavis.UriTemplates.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\bin\Release\net6.0\BCrypt.Net-Next.dll

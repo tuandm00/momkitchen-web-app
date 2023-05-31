@@ -148,5 +148,73 @@ namespace momkitchen.Services
             });
             return sessions.ToList();
         }
+
+        public SessionPackage GetAllSessionPackage(int id)
+        {
+            var result = _ctx.SessionPackages.Where(x => x.Id == id).Select(x => new SessionPackage()
+            {
+                Id = id,
+                FoodPackage = x.FoodPackage,
+                Session = x.Session,
+                Price = x.Price,
+                Quantity = x.Quantity,
+                RemainQuantity = x.RemainQuantity,
+                Status = x.Status,
+                CreateDate = x.CreateDate,
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+        public List<SessionPackage> GetAllSessionPackageWithSessionStatusOn()
+        {
+            var sessionStatus = true; // Desired session status value
+
+            var sessionPackageList = _ctx.SessionPackages
+                .Where(sp => _ctx.Sessions.Any(s => (s.Status ?? false) == sessionStatus && s.Id == sp.SessionId)).Select(x => new SessionPackage()
+                {
+                    Id=x.Id,
+                    FoodPackage=x.FoodPackage,
+                    Session=x.Session,
+                    Price=x.Price,
+                    Quantity=x.Quantity,
+                    RemainQuantity=x.RemainQuantity,
+                    Status=x.Status,
+                    CreateDate=x.CreateDate,
+                })
+                .ToList();
+
+            return sessionPackageList;
+
+        }
+
+        public List<SessionPackage> GetAllSessionPackage()
+        {
+            var result = _ctx.SessionPackages.Select(x => new SessionPackage()
+            {
+                Id = x.Id,
+                FoodPackage = x.FoodPackage,
+                Session = x.Session,
+                Price = x.Price,
+                Quantity = x.Quantity,
+                RemainQuantity = x.RemainQuantity,
+                Status = x.Status,
+                CreateDate = x.CreateDate,
+            });
+
+            return result.ToList();
+        }
+
+        //public List<SessionPackage> GetAllSessionPackage()
+        //{
+        //    var result = _ctx.SessionPackages.Select(x => new SessionPackage() 
+        //    {
+        //    Id = x.Id,
+        //    FoodPackage=x.FoodPackage,
+        //    Session=x.Session,
+        //    Price=x.Price,
+        //    Quantity=x.Quantity,
+        //    });
+        //}
     }
 }

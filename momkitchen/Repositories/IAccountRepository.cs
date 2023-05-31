@@ -9,16 +9,23 @@ namespace momkitchen.Services
         AuthenticationResult Login(LoginDto account);
 
         Task UpdateAccountStatus(string email, bool status);
-        string HashPassword(string password);
+        string HashPassword1(string password);
         Task Register(Account account);
 
         Task RegisterChefAndShipper(Account account);
-
 
         Task UpdateAccount(string email, AccountDto accountDto);
 
         Task UpdateCustomerDetail(CustomerDto customerDto);
 
         List<CustomerDto> GetInfoCusByID(string email);
+
+        Task RegisterShipperByBcryt(Account account);
+
+        Customer GetAllCustomerByEmail(string email);
+
+        //List<AllUserDto> GetAll
+
+        List<Account> GetAccountByEmail(string email);
     }
 }

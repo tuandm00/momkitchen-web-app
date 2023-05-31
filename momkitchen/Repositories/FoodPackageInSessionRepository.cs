@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using momkitchen.Mapper;
 using momkitchen.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace momkitchen.Services
 {
@@ -15,16 +16,33 @@ namespace momkitchen.Services
             _mapper = mapper;
         }
 
-        public async Task ChangeStatus(int id, FoodPackageInSessionDto foodPackageInSessionDto)
+        public async Task ChangeStatus(int id, int status)
         {
             var result = await _ctx.SessionPackages.FindAsync(id);
-            if (result != null)
+            if(result != null)
             {
-                result.Status = foodPackageInSessionDto.Status;
+                //0 New 1Approve 2Reject 3Cancel
+                if(result.Status == 0)
+                {
+                    if(status == 1)
+                    {
+                        result.Status = 1;
+                    } else if(status == 2){
+                        if (result.Status == 0) { result.Status = 2; }
+                        else if(result.Status == 2) { result.Status = 3; }
+                    }
+                }
+
                 await _ctx.SaveChangesAsync();
             }
-                
 
+        }
+
+        public List<SessionPackage> GetAllSessionPackage()
+        {
+            var result = _ctx.SessionPackages.Include(x => x.FoodPackage).ThenInclude(x => x.DishFoodPackages).ThenInclude(x => x.Dish).ToList();
+            return result;
+                
         }
     }
 }

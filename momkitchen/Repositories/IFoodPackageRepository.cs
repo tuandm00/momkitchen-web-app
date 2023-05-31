@@ -8,8 +8,13 @@ namespace momkitchen.Services
          List<SessionPackage> GetAllSessionPackage();
          List<DishFoodPackage> GetDishByFoodPackageId(int foodpackageid);
 
-        List<FoodPackage> GetAllFoodPackage(int foodpackageid);
+        FoodPackage GetAllFoodPackage(int foodpackageid);
 
         List<DishFoodPackage> GetAllDish(int dishid);
+
+        SessionPackage GetAlllSessionPackageByFoodpackageId(int foodpackageid);
+
+
+
     }
 }

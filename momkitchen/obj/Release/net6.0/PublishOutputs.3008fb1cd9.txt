@@ -9,6 +9,7 @@ E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\AutoMapp
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Azure.Core.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Azure.Identity.dll
+E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\BCrypt.Net-Next.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.JsonPatch.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 E:\Capstone\Code_BE\momkitchen\momkitchen\obj\Release\net6.0\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll

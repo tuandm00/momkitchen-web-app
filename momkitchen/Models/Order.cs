@@ -31,6 +31,8 @@ public partial class Order
 
     public string? Note { get; set; }
 
+    public int? TotalPrice { get; set; }
+
     public virtual Batch? Batch { get; set; }
 
     public virtual Building? Building { get; set; }

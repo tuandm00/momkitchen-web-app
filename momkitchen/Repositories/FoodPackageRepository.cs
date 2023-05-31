@@ -54,7 +54,14 @@ namespace momkitchen.Services
                 FoodPackageId = x.FoodPackageId,
                 Quantity = x.Quantity,
                 DisplayIndex = x.DisplayIndex,
-                Dish = x.Dish,
+                Dish = new Dish()
+                {
+                    Id = x.Dish.Id,
+                    Name = x.Dish.Name,
+                    DishType = x.Dish.DishType,
+                    ChefId = x.Dish.ChefId,
+                    Image = x.Dish.Image,
+                },
                 FoodPackage = x.FoodPackage,
 
             });
@@ -63,7 +70,7 @@ namespace momkitchen.Services
 
         }
 
-        public List<FoodPackage> GetAllFoodPackage(int foodpackageid)
+        public FoodPackage GetAllFoodPackage(int foodpackageid)
         {
             var findpackageid = _ctx.FoodPackages.Where(x => x.Id == foodpackageid).Select(x => new FoodPackage()
             {
@@ -74,9 +81,9 @@ namespace momkitchen.Services
                 ChefId = x.ChefId,
                 Description = x.Description,
                 FoodPackageStyle = x.FoodPackageStyle,
-            });
+            }).FirstOrDefault();
 
-            return findpackageid.ToList();
+            return findpackageid;
         }
 
         public List<DishFoodPackage> GetAllDish(int dishid)
@@ -92,6 +99,36 @@ namespace momkitchen.Services
 
             return finddishid.ToList();
         }
+
+        public SessionPackage GetAlllSessionPackageByFoodpackageId(int foodpackageid)
+        {
+            var result = _ctx.SessionPackages.Where(x => x.FoodPackageId == foodpackageid).Include(x => x.FoodPackage).Select(x => new SessionPackage()
+            {
+                Id = x.Id,
+                FoodPackageId = foodpackageid,
+                FoodPackage = new FoodPackage()
+                {
+                    Id = x.FoodPackage.Id,
+                    Name = x.FoodPackage.Name,
+                    Image=x.FoodPackage.Image,
+                    DefaultPrice = x.FoodPackage.DefaultPrice,
+                    ChefId = x.FoodPackage.ChefId,
+                    Description = x.FoodPackage.Description,
+                    FoodPackageStyleId = x.FoodPackage.FoodPackageStyleId,
+                    FoodPackageStyle = x.FoodPackage.FoodPackageStyle
+                },
+                Session = x.Session,
+                Price = x.Price,
+                Quantity = x.Quantity,
+                RemainQuantity = x.RemainQuantity,
+                Status = x.Status,
+                CreateDate = x.CreateDate,
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+        
     }
 }
     

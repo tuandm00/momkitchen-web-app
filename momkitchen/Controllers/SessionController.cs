@@ -72,5 +72,19 @@ namespace momkitchen.Controllers
 
             }
         }
+
+        [HttpGet]
+        [Route("getallsessionpackagebyid")]
+
+        public SessionPackage GetAllSessionPackage(int id) => _repository.GetAllSessionPackage(id);
+
+        [HttpGet]
+        [Route("getallsessionpackagewithsessionstatuson")]
+        public List<SessionPackage> GetAllSessionPackageWithSessionStatusOn() => _repository.GetAllSessionPackageWithSessionStatusOn();  
+        
+        [HttpGet]
+        [Route("getallsessionpackage")]
+
+        public List<SessionPackage> GetAllSessionPackage() => _repository.GetAllSessionPackage();
     }
 }

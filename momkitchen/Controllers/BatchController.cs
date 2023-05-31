@@ -52,5 +52,13 @@ namespace momkitchen.Controllers
         [HttpGet]
 
         public List<Shipper> GetAllShipper() => _repository.GetAllShipper();
+
+        [HttpGet]
+        [Route("getallbatch")]
+         public List<Batch> GetAllBatch() => _repository.GetAllBatch();
+
+        [HttpDelete]
+
+        public async Task<Batch> DeleteBatchById(int batchid) => await _repository.DeleteBatchById(batchid);    
     }
 }

@@ -31,10 +31,15 @@ namespace momkitchen.Controllers
 
         [HttpGet]
         [Route("getallfoodpackagebyid")]
-        public List<FoodPackage> GetAllFoodPackage(int foodpackageid) => _repository.GetAllFoodPackage(foodpackageid);
+        public FoodPackage GetAllFoodPackage(int foodpackageid) => _repository.GetAllFoodPackage(foodpackageid);
 
         [HttpGet]
         [Route("getalldishbyid")]
         public List<DishFoodPackage> GetAllDish(int dishid) => _repository.GetAllDish(dishid);
+
+        [HttpGet]
+        [Route("getallsessionpackagebyfoodpacakgeid")]
+        public SessionPackage GetAlllSessionPackageByFoodpackageId(int foodpackageid) => _repository.GetAlllSessionPackageByFoodpackageId(foodpackageid); 
+
     }
 }

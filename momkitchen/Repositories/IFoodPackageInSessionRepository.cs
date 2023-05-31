@@ -5,6 +5,8 @@ namespace momkitchen.Services
 {
     public interface IFoodPackageInSessionRepository
     {
-        Task ChangeStatus(int id, FoodPackageInSessionDto foodPackageInSessionDto);
+        Task ChangeStatus(int id, int status);
+
+        List<SessionPackage> GetAllSessionPackage();
     }
 }

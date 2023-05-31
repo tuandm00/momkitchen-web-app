@@ -6,15 +6,22 @@ namespace momkitchen.Services
 {
     public interface ISessionRepository
     {
-            Task<SessionResponse> CreateSession(SessionDto session);
+        Task<SessionResponse> CreateSession(SessionDto session);
 
-            Task<Session> DeleteSession(int id);
+        Task<Session> DeleteSession(int id);
 
-            Task UpdateStatusSession(int id, bool status);
+        Task UpdateStatusSession(int id, bool status);
 
-            List<Session> GetAllSession();
+        List<Session> GetAllSession();
 
-            Task<SessionResponse> EnableOrDisableTime(int id, SessionDto session);
+        Task<SessionResponse> EnableOrDisableTime(int id, SessionDto session);
+
+        SessionPackage GetAllSessionPackage(int id);
+
+        List<SessionPackage> GetAllSessionPackage();
+
+        List<SessionPackage> GetAllSessionPackageWithSessionStatusOn();
+
     }
 
 

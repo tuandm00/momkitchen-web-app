@@ -24,16 +24,19 @@ namespace momkitchen.Controllers
 
         [HttpPatch]
 
-        public async Task ChangeStatus(int id, FoodPackageInSessionDto foodPackageInSessionDto)
+        public async Task ChangeStatus(int id, int status)
         {
             try
             {
-                 await _repository.ChangeStatus(id, foodPackageInSessionDto);
+                 await _repository.ChangeStatus(id, status);
 
             }catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex);
             }
         }
+
+        [HttpGet]
+        public List<SessionPackage> GetAllSessionPackage() => _repository.GetAllSessionPackage();
     }
 }

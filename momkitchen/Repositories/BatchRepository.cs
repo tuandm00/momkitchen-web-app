@@ -20,8 +20,7 @@ namespace momkitchen.Services
         {
             var newBatch = new Batch()
             {
-                //status in Batch:  0 is for collect batch and 1 is for delivery batch
-                ShipperId = batch.ShipperId,
+                //status in Batch:  0(False) is for collect batch and 1(True) is for delivery batch
                 Status = batch.Status,
                 SessionId = batch.SessionId,
 
@@ -91,10 +90,33 @@ namespace momkitchen.Services
                     AssignBatchForShipper(batchid, emailshipper);
                     b.ShipperId = shipperid;
                 }
-                break;
-            }
 
+            }
             _ctx.SaveChanges();
+
+        }
+
+        public List<Batch> GetAllBatch()
+        {
+            var resul = _ctx.Batches.Select(x => new Batch()
+            {
+                Id = x.Id,
+                Shipper = x.Shipper,
+                Status = x.Status,
+                Session = x.Session,
+            });
+
+            return resul.ToList();
+        }
+
+        public async Task<Batch> DeleteBatchById(int batchid)
+        {
+            var result = await _ctx.Batches.FindAsync(batchid);
+
+            _ctx.Batches.Remove(result);
+            _ctx.SaveChanges();
+
+            return result;
         }
     }
 }

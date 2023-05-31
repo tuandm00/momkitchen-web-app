@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0C4I+00966DSe8/gnhw33A+We5O5YHUdMhVArUVOtQTgUUVUjK+nW6/id+uCOqkC0wdAUkhFS+j74aEArkf6Iw==",
+  "dgSpecHash": "gsNtN5zt5MwvNlsgdL0lJwSlRfAS4JkMYZyoAbxdShBmlUbxvl0H3g0qoFEdkhb10+WIKPJ+H3nCltkPPdtScQ==",
   "success": true,
   "projectFilePath": "E:\\Capstone\\Code_BE\\momkitchen\\momkitchen\\momkitchen.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Asus\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\azure.core\\1.30.0\\azure.core.1.30.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\6.0.16\\microsoft.aspnetcore.jsonpatch.6.0.16.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.16\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.16.nupkg.sha512",

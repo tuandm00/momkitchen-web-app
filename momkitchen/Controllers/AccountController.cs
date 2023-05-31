@@ -69,15 +69,15 @@ namespace momkitchen.Controllers
             return (ctx.Accounts?.Any(x => x.Email == email )).GetValueOrDefault();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAccount(int id)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAccount(string email)
         {
             if (ctx.Accounts == null)
             {
                 return NotFound();
             }
 
-            var user = await ctx.Accounts.FindAsync(id);
+            var user = await ctx.Accounts.FindAsync(email);
             if (user == null)
             {
                 return NotFound();
@@ -112,5 +112,13 @@ namespace momkitchen.Controllers
         [HttpGet]
         public List<CustomerDto> GetInfoCusByID(string email) => _repository.GetInfoCusByID(email);
         
+        [HttpGet]
+        [Route("getallcustomerbyemail")]    
+        public Customer GetAllCustomerByEmail(string email) => _repository.GetAllCustomerByEmail(email);
+
+        [HttpGet]
+        [Route("getaccountbyemail")]
+
+        public List<Account> GetAccountByEmail(string email) => _repository.GetAccountByEmail(email);   
     }
 }
