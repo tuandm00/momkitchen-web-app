@@ -86,5 +86,10 @@ namespace momkitchen.Controllers
         [Route("getallsessionpackage")]
 
         public List<SessionPackage> GetAllSessionPackage() => _repository.GetAllSessionPackage();
+
+        [HttpGet]
+        [Route("choosesessionforbatch")]
+
+        public void ChooseSessionForBatch(int batchid, int sessionid) => _repository.ChooseSessionForBatch(batchid, sessionid); 
     }
 }

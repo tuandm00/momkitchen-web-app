@@ -168,23 +168,27 @@ namespace momkitchen.Services
 
         public List<SessionPackage> GetAllSessionPackageWithSessionStatusOn()
         {
-            var sessionStatus = true; // Desired session status value
+            var sessionStatus = true;
+            var sessionpackageStatus = 1;
 
             var sessionPackageList = _ctx.SessionPackages
-                .Where(sp => _ctx.Sessions.Any(s => (s.Status ?? false) == sessionStatus && s.Id == sp.SessionId)).Select(x => new SessionPackage()
+                .Where(sp => sp.Status == sessionpackageStatus && _ctx.Sessions.Any(s => (s.Status ?? false) == sessionStatus && s.Id == sp.SessionId)).Select(x => new SessionPackage()
                 {
-                    Id=x.Id,
-                    FoodPackage=x.FoodPackage,
-                    Session=x.Session,
-                    Price=x.Price,
-                    Quantity=x.Quantity,
-                    RemainQuantity=x.RemainQuantity,
-                    Status=x.Status,
-                    CreateDate=x.CreateDate,
+                    Id = x.Id,
+                    FoodPackage = x.FoodPackage,
+                    Session = x.Session,
+                    Price = x.Price,
+                    Quantity = x.Quantity,
+                    RemainQuantity = x.RemainQuantity,
+                    Status = x.Status,
+                    CreateDate = x.CreateDate,
                 })
                 .ToList();
 
             return sessionPackageList;
+
+
+
 
         }
 
@@ -203,6 +207,18 @@ namespace momkitchen.Services
             });
 
             return result.ToList();
+        }
+
+        public void ChooseSessionForBatch(int batchid, int sessionid)
+        {
+            var resultbatchid = _ctx.Batches.FirstOrDefault(x => x.Id == batchid);
+            var resultsessionid = _ctx.Sessions.FirstOrDefault(x => x.Id == sessionid);
+
+            resultbatchid.SessionId = resultsessionid.Id;
+
+            _ctx.SaveChanges();
+            
+
         }
 
         //public List<SessionPackage> GetAllSessionPackage()

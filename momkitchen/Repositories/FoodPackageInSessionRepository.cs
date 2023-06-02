@@ -29,7 +29,20 @@ namespace momkitchen.Services
                         result.Status = 1;
                     } else if(status == 2){
                         if (result.Status == 0) { result.Status = 2; }
-                        else if(result.Status == 2) { result.Status = 3; }
+                    } 
+                }
+                if(result.Status == 1)
+                {
+                    if(status == 3)
+                    {
+                        result.Status = 3;
+                    }
+                }
+                if(result.Status == 2)
+                {
+                    if(status == 3)
+                    {
+                        result.Status= 3;
                     }
                 }
 

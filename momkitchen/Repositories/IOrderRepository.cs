@@ -16,5 +16,13 @@ namespace momkitchen.Services
         Payment GetPaymentByOrderId(int orderid);
 
         List<Order> GetAllOrder();
+
+        int CountOrder();
+
+        int CountTotalPrice();
+
+        List<Order> GetOrderByEmailCustomer(string emailcustomer);
+
+        List<SessionPackage> GetSessionPackageIdbyOrderId(int orderid);
     }
 }

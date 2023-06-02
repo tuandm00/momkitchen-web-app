@@ -15,6 +15,7 @@ namespace momkitchen.Mapper
             CreateMap<AccountDto, Account>().ReverseMap();
             CreateMap<Batch, BatchReponse>().ReverseMap();
             CreateMap<OrderDto, Order>().ReverseMap();
+            CreateMap<GetAllUserDto, Account>().ReverseMap();
         }
     }
 }

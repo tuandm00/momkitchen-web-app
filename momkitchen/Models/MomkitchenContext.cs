@@ -349,6 +349,7 @@ public partial class MomkitchenContext : DbContext
             entity.Property(e => e.Address).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.Phone).HasMaxLength(50);
 
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.Shippers)
                 .HasForeignKey(d => d.Email)

@@ -3,6 +3,7 @@ using momkitchen.Mapper;
 using momkitchen.Models;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace momkitchen.Services
 {
@@ -99,6 +100,7 @@ namespace momkitchen.Services
 
 
             ctx.Add(account);
+            ctx.SaveChangesAsync();
             if (await ctx.SaveChangesAsync() == 1)
             {
                 var customer = new Customer
@@ -247,9 +249,57 @@ namespace momkitchen.Services
             return result;
         }
 
-        public List<Account> GetAccountByEmail(string email)
+        public Account GetAccountByEmail(string email)
         {
-            var result = ctx.Accounts.Where(x => x.Email == email).ToList();
+            var result = ctx.Accounts.Where(x => x.Email == email).SingleOrDefault();
+            return result;
+        }
+
+        public List<GetAllUserDto> GetAllUserDetail()
+        {
+            var customers = ctx.Customers.Select(c => new GetAllUserDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                DefaultBuilding = c.DefaultBuilding,
+                Email = c.Email,
+                Image = c.Image,
+                Phone = c.Phone,
+            }).ToList();
+
+            var chefs = ctx.Chefs.Select(ch => new GetAllUserDto
+            {
+                Id = ch.Id,
+                Address = ch.Address,
+                BuildingId = ch.BuildingId,
+                Email = ch.Email,
+                Image = ch.Image,
+                Name = ch.Name,
+                Phone = ch.Phone,
+            }).ToList();
+
+            var shippers = ctx.Shippers.Select(s => new GetAllUserDto
+            {
+                Id = s.Id,
+                Address = s.Address,
+                BatchId = s.BatchId,
+                Email = s.Email,
+                Image = s.Image,
+                Name = s.Name,
+                Phone = s.Phone,
+            }).ToList();
+
+            var allUsers = new List<GetAllUserDto>();
+            allUsers.AddRange(customers);
+            allUsers.AddRange(chefs);
+            allUsers.AddRange(shippers);
+
+            return allUsers;
+        }
+
+        public int CountCustomer()
+        {
+            var result = ctx.Customers.Count();
             return result;
         }
     }

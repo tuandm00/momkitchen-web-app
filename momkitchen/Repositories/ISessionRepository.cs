@@ -22,6 +22,8 @@ namespace momkitchen.Services
 
         List<SessionPackage> GetAllSessionPackageWithSessionStatusOn();
 
+        void ChooseSessionForBatch(int batchid, int sessionid);
+
     }
 
 

@@ -52,27 +52,26 @@ namespace momkitchen.Services
                             );
             return isValid ? date : null;
         }
-        public int GetBatchIdByBuildingId(string email)
+        public int GetBatchIdByBuildingId(int buildingId)
         {
             var batch = 0;
-            var buildingid = _ctx.Customers.Where(x => x.Email == email).AsNoTracking().Select(x => x.DefaultBuilding).FirstOrDefault();
-            if ((buildingid >= 1) && (buildingid <= 3))
+            if ((buildingId >= 1) && (buildingId <= 3))
             {
                 batch = 1;
             };
-            if (buildingid > 3 && buildingid <= 6)
+            if (buildingId > 3 && buildingId <= 6)
             {
                 batch = 2;
             }
-            if (buildingid > 6 && buildingid <= 9)
+            if (buildingId > 6 && buildingId <= 9)
             {
                 batch = 3;
             }
-            if (buildingid > 9 && buildingid <= 12)
+            if (buildingId > 9 && buildingId <= 12)
             {
                 batch = 4;
             }
-            if (buildingid > 12 && buildingid <= 15)
+            if (buildingId > 12 && buildingId <= 15)
             {
                 batch = 5;
             }
@@ -91,7 +90,8 @@ namespace momkitchen.Services
             var buildingid = _ctx.Customers.Where(x => x.Email == orderDto.Email).AsNoTracking().Select(x => x.DefaultBuilding).FirstOrDefault();
             var customerphone = _ctx.Customers.Where(x => x.Email == orderDto.Email).AsNoTracking().Select(x => x.Phone).FirstOrDefault();
             var email = orderDto.Email;
-            var batchid = GetBatchIdByBuildingId(email);
+            var buildingId = orderDto.BuildingId;
+            var batchid = GetBatchIdByBuildingId((int)buildingId);
             var now = GetDateTimeTimeZoneVietNam();
 
             var newOrder = new Order()
@@ -100,7 +100,7 @@ namespace momkitchen.Services
                 Date = now,
                 DeliveryTime = now.AddMinutes(15),
                 CustomerId = customerid,
-                BuildingId = buildingid,
+                BuildingId = orderDto.BuildingId,
                 CustomerPhone = customerphone,
                 Status = OrderConstrants.NEWSTATUS,
                 DeliveryStatus = OrderConstrants.NEWDELIVERYSTATUS,
@@ -246,5 +246,49 @@ namespace momkitchen.Services
             var result = _ctx.Orders.ToList();
             return result;
         }
+
+        public int CountOrder()
+        {
+            var result = _ctx.Orders.Count();
+            return result;
+        }
+
+        public int CountTotalPrice()
+        {
+            var result = _ctx.Orders.Sum(o => o.TotalPrice);
+            return (int)result;
+        }
+
+        public List<Order> GetOrderByEmailCustomer(string emailcustomer)
+        {
+            var result = _ctx.Orders
+        .Where(x => x.Email == emailcustomer)
+        .Include(x => x.Customer)
+        .Include(x => x.OrderDetails)
+            .ThenInclude(x => x.SessionPackage)
+                .ThenInclude(x => x.FoodPackage)
+        .ToList();
+
+            return result;
+        }
+
+        public List<SessionPackage> GetSessionPackageIdbyOrderId(int orderid)
+        {
+            var result = _ctx.OrderDetails.Where(x => x.OrderId == orderid).Select(x => new SessionPackage
+            {
+                Id = x.OrderId,
+                FoodPackage = x.SessionPackage.FoodPackage,
+                SessionId = x.SessionPackage.SessionId,
+                Price = x.SessionPackage.Price,
+                Quantity = x.SessionPackage.Quantity,
+                RemainQuantity = x.SessionPackage.RemainQuantity,
+                Status = x.SessionPackage.Status,
+                CreateDate = x.SessionPackage.CreateDate,
+
+            }).ToList();
+
+            return result;
+        }
+
     }
 }

@@ -62,5 +62,23 @@ namespace momkitchen.Controllers
         [Route("getallorder")]
 
         public List<Order> GetAllOrder() => _repository.GetAllOrder();
+
+        [HttpGet]
+        [Route("countorder")]
+
+        public int CountOrder() => _repository.CountOrder();
+
+        [HttpGet]
+        [Route("counttotalprice")]
+        public int CountTotalPrice() => _repository.CountTotalPrice();
+
+        [HttpGet]
+        [Route("getorderbyemailcustomer")]
+
+        public List<Order> GetOrderByEmailCustomer(string emailcustomer) => _repository.GetOrderByEmailCustomer(emailcustomer);
+
+        [HttpGet]
+        [Route("getsessionpackagebyorderid")]
+        public List<SessionPackage> GetSessionPackageIdbyOrderId(int orderid) => _repository.GetSessionPackageIdbyOrderId((int)orderid);
     }
 }

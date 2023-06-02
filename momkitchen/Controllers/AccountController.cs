@@ -119,6 +119,17 @@ namespace momkitchen.Controllers
         [HttpGet]
         [Route("getaccountbyemail")]
 
-        public List<Account> GetAccountByEmail(string email) => _repository.GetAccountByEmail(email);   
+        public Account GetAccountByEmail(string email) => _repository.GetAccountByEmail(email);   
+        
+        [HttpGet]
+        [Route("getalluserdetail")]
+
+        public List<GetAllUserDto> GetAllUserDetail() => _repository.GetAllUserDetail();
+
+        [HttpGet]
+        [Route("countcustomer")]
+
+        public int CountCustomer() => _repository.CountCustomer();
     }
+
 }

@@ -26,6 +26,10 @@ namespace momkitchen.Services
 
         //List<AllUserDto> GetAll
 
-        List<Account> GetAccountByEmail(string email);
+        Account GetAccountByEmail(string email);
+
+        List<GetAllUserDto> GetAllUserDetail();
+
+        int CountCustomer();
     }
 }
