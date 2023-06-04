@@ -128,7 +128,14 @@ namespace momkitchen.Services
             return result;
         }
 
-        
+        public void DeleteFoodPackage(int id)
+        {
+            var result = _ctx.FoodPackages.Find(id);
+            _ctx.FoodPackages.Remove(result);
+            _ctx.SaveChanges();
+        }
+
+
     }
 }
     

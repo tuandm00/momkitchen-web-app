@@ -70,11 +70,8 @@ namespace momkitchen.Services
                 if (s.Email.Equals(emailshipper))
                 {
                     s.BatchId = batchid;
-                    
                 }
-                break;
             }   
-
             _ctx.SaveChanges();
 
         }
@@ -90,7 +87,6 @@ namespace momkitchen.Services
                     AssignBatchForShipper(batchid, emailshipper);
                     b.ShipperId = shipperid;
                 }
-
             }
             _ctx.SaveChanges();
 

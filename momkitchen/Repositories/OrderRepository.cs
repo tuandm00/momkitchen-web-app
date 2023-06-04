@@ -78,6 +78,7 @@ namespace momkitchen.Services
             return batch;
         }
 
+
         public OrderDetail GetOrderDetailByOrderId(int id)
         {
             return _ctx.OrderDetails.Where(x => x.OrderId == id).Include(x => x.Order).ThenInclude(x => x.Payments).Select(x => new OrderDetail()).FirstOrDefault();
@@ -128,7 +129,7 @@ namespace momkitchen.Services
             foreach (var orderDetailDto in orderDto.OrderDetails)
             {
                 quantity += orderDetailDto.Quantity;
-                total += (int)orderDetailDto.Price;
+                total +=  orderDetailDto.Quantity * (int)orderDetailDto.Price;
                 var orderDetail = new OrderDetail()
                 {
                     Order = newOrder,

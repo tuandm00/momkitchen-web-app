@@ -139,7 +139,6 @@ namespace momkitchen.Services
             account.AccountStatus = "true";
 
 
-
             ctx.Add(account);
             if (account.RoleId == 3)
             {
@@ -148,6 +147,7 @@ namespace momkitchen.Services
                     var chef = new Chef
                     {
                         Email = account.Email,
+                        Phone = "0",
                     };
 
                     ctx.Add(chef);
@@ -161,15 +161,12 @@ namespace momkitchen.Services
                     var shipper = new Shipper
                     {
                         Email = account.Email,
+                        Phone = "0",
                     };
 
                     ctx.Add(shipper);
                     await ctx.SaveChangesAsync();
-                
-
             }
-
-
         }
 
         public async Task RegisterShipperByBcryt(Account account)
@@ -188,6 +185,7 @@ namespace momkitchen.Services
                     var shipper = new Shipper
                     {
                         Email = account.Email,
+                        Phone = "0",
                     };
 
                     ctx.Add(shipper);

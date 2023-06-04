@@ -14,6 +14,7 @@ namespace momkitchen.Services
 
         SessionPackage GetAlllSessionPackageByFoodpackageId(int foodpackageid);
 
+        void DeleteFoodPackage(int id);
 
 
     }

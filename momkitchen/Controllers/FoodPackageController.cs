@@ -41,5 +41,10 @@ namespace momkitchen.Controllers
         [Route("getallsessionpackagebyfoodpacakgeid")]
         public SessionPackage GetAlllSessionPackageByFoodpackageId(int foodpackageid) => _repository.GetAlllSessionPackageByFoodpackageId(foodpackageid); 
 
+        [HttpDelete]
+        [Route("deletefoodpackage")]
+
+        public void DeleteFoodPackage(int id) => _repository.DeleteFoodPackage(id);
+        
     }
 }
